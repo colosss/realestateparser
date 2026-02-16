@@ -1,0 +1,20 @@
+[project]
+name = "parser"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "colosss",email = "kocnevs.jk@yandex.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "selenium (>=4.40.0,<5.0.0)",
+    "beautifulsoup4 (>=4.14.3,<5.0.0)",
+    "pandas (>=3.0.0,<4.0.0)",
+    "pandas[excel,html,performance] (>=3.0.0,<4.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
