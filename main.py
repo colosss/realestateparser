@@ -15,17 +15,16 @@ for _ in range(3):
 html = driver.page_source
 soup = BeautifulSoup(html, 'html.parser')
 
-cards = soup.find_all('div', {'data-name': 'CardComponent'})
+cards = soup.find_all('div', {'data-name': 'LinkArea'})
 
 all_data = []
 for card in cards:
     data = {
         'price': card.find('span', {'data-mark': 'MainPrice'}),
-        'area': card.find('span', {'data-mark': 'Area'}),
-        'rooms': card.find('span', {'data-mark': 'Rooms'}),
-        'floor': card.find('span', {'data-mark': 'Floor'}),
-        'address': card.find('a', {'data-mark': 'GeoLabel'}),
-        'metro': card.find('a', {'data-mark': 'UndergroundLabel'}),
+        'discount_price': card.find('span', {'data-mark': 'DiscountPrice'}),
+        'area_price': card.find('p', {'data-mark': 'PriceInfo'}),
+        'subtitle': card.find('span', {'data-mark': 'OfferSubtitle'}),
+        'address': card.find('a', {'data-mark': 'GeoLabel'})
     }
     
     data = {k: v.text.strip() if v else None for k, v in data.items()}
