@@ -150,6 +150,7 @@ for page in range(1, PAGES+1):
 
         price_tag=card.find('span', {'data-marker': 'item-price-value'})
         price=price_tag.get_text(strip=True) if price_tag else None
+        price = normalize_text(txt=price.replace('от', '').strip())
         if not price:
             continue
 
