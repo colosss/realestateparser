@@ -8,7 +8,7 @@ import subprocess
 
 PAGES = 50
 SAVE_EVERY=50
-FILE_NAME="analitic_avito_dataset_"
+FILE_NAME="final_avito_dataset_"
 
 def normalize_text(txt:str):
     return txt.replace('\xa0', ' ').replace('\u202f', ' ')
@@ -17,7 +17,7 @@ def normilize_time(time:str):
     time=normalize_text(txt=time)
     time=time.replace('–',' ')
     parts=[x for x in time.split(' ')]
-    return parts[1]
+    return parts[1] if time else None
 
 
 
@@ -25,7 +25,7 @@ def plus_null(d:str):
     parts_d=[x.strip() for x in d.split('.')]
     if len(parts_d[0])<2:
         parts_d[0]='0'+parts_d[0]
-        return '.'.join(parts_d)
+        return '.'.join(parts_d) if parts_d else None
     return d
 
 def normalize_d(d:str):
@@ -145,14 +145,14 @@ for page in range(1, PAGES+1):
                 space_part=[x.strip() for x in parts[1].split(' ')]
                 parts[1]=space_part[0]
 
-        if len(parts)<2:
-            continue
+        # if len(parts)<2:
+        #     continue
 
         price_tag=card.find('span', {'data-marker': 'item-price-value'})
         price=price_tag.get_text(strip=True) if price_tag else None
         price = normalize_text(txt=price.replace('от', '').strip())
-        if not price:
-            continue
+        # if not price:
+        #     continue
 
         area_price=None
         for p in card.find_all('p'):
@@ -160,8 +160,8 @@ for page in range(1, PAGES+1):
             txt=normalize_text(txt=txt)
             if txt and ('за м²' in txt or 'за м2' in txt):
                 area_price = txt.replace('за м²', '').replace('за м2', '').strip()
-        if area_price is None:
-            continue
+        # if area_price is None:
+        #     continue
             
         street=card.find('a', {'data-marker': 'street_link'})
         house=card.find('a', {'data-marker': 'house_link'})
@@ -171,8 +171,8 @@ for page in range(1, PAGES+1):
 
         metro_link=card.find('a', {'data-marker': 'metro_link'})
         metro_name=metro_link.get_text(strip=True) if metro_link else ''
-        if not metro_name:
-            continue
+        # if not metro_name:
+        #     continue
 
         time_to_metro=""
         if metro_link:
@@ -181,31 +181,31 @@ for page in range(1, PAGES+1):
                 time_to_metro=next_span.get_text(strip=True)
                 time_to_metro=time_to_metro.strip(',')
         time_to_metro=normilize_time(time=time_to_metro)
-        if not time_to_metro:
-            continue
+        # if not time_to_metro:
+        #     continue
 
         d_tag=card.find('div', {'data-marker': 'item-date/wrapper'})
         d=d_tag.get_text(strip=True) if d_tag else None
         d=normalize_d(d=d) if d else None
         d=plus_null(d=d) if d else None
-        if not d:
-            continue
+        # if not d:
+        #     continue
 
         link_tag=card.find('a', {'data-marker': 'item-title'})
         source=f"https://www.avito.ru{link_tag.get('href')}" if link_tag else None
-        if not source:
-            continue
+        # if not source:
+        #     continue
 
         data = {
             'type': parts[0] if len(parts) > 0 else None,
             'space': parts[1] if len(parts) > 1 else None,
-            'price': price,
-            'area_price': area_price,
-            'address': address,
-            'metro': metro_name,
-            'time_to_metro': time_to_metro,
-            'date': d,
-            'source': source
+            'price': price if price else None,
+            'area_price': area_price if area_price else None, 
+            'address': address if address else None,
+            'metro': metro_name if metro_name else None,
+            'time_to_metro': time_to_metro if time_to_metro else None,
+            'date': d if d else None,
+            'source': source if source else None
         }
         
         all_data.append(data)
