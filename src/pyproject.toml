@@ -1,0 +1,34 @@
+[project]
+name = "parser"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "colosss",email = "kocnevs.jk@yandex.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "selenium (>=4.40.0,<5.0.0)",
+    "beautifulsoup4 (>=4.14.3,<5.0.0)",
+    "pandas (>=3.0.0,<4.0.0)",
+    "pandas[excel,html,performance] (>=3.0.0,<4.0.0)",
+    "undetected-chromedriver (>=3.5.5,<4.0.0)",
+    "setuptools (>=82.0.0,<83.0.0)",
+    "matplotlib (>=3.10.8,<4.0.0)",
+    "seaborn (>=0.13.2,<0.14.0)",
+    "scipy (>=1.17.1,<2.0.0)",
+    "kernel (>=0.41.0,<0.42.0)",
+    "ipykernel (>=7.2.0,<8.0.0)",
+    "statsmodels (>=0.14.6,<0.15.0)",
+    "missingno (>=0.5.2,<0.6.0)",
+    "plotly (>=6.6.0,<7.0.0)",
+    "nbformat (>=5.10.4,<6.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false

@@ -5,6 +5,12 @@ from scipy.stats import skew, kurtosis
 import numpy as np
 import os
 
+from typing import Union
+
+class Calculator:
+    def add (self, x: Union[int, float], y: Union[int, float],)-> int | float:
+        return x + y
+
 csv_file = 'analitic_avito_dataset_50_pages.csv'
 
 df = pd.read_csv(csv_file)
@@ -111,3 +117,4 @@ for col in [price_col, area_price_col]:
         print(f'Эксцесс {col}: {kurt:.2f}')
 
 print(f'Графики сохранены в директории: {output_dir}')
+
